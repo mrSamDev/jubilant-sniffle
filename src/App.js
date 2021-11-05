@@ -1,16 +1,30 @@
-import logo from "./logo.svg";
-import "./App.css";
 import Layout from "./components/shared/layout";
+import { Routes, Route } from "react-router-dom";
+import Table from "./pages/table";
+import Graph from "./pages/graph";
+import Page from "./components/shared/page";
 
 function App() {
 	return (
 		<Layout>
-			<p>
-				Edit <code>src/App.js</code> and save to reload.
-			</p>
-			<a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-				Learn React
-			</a>
+			<Routes>
+				<Route
+					path="/"
+					element={
+						<Page title="Table">
+							<Table />
+						</Page>
+					}
+				/>
+				<Route
+					path="graph"
+					element={
+						<Page title="Graph">
+							<Graph />
+						</Page>
+					}
+				/>
+			</Routes>
 		</Layout>
 	);
 }
