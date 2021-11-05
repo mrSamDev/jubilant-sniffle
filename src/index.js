@@ -7,11 +7,14 @@ import theme from "./theme";
 import { ThemeProvider } from "@mui/material/styles";
 import store from "./store/configure-store";
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 
 const HigherOrderComponentsWrappeedApp = () => (
 	<ThemeProvider theme={theme}>
 		<Provider store={store}>
-			<App />
+			<BrowserRouter>
+				<App />
+			</BrowserRouter>
 		</Provider>
 	</ThemeProvider>
 );
