@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 export default function Layout(props) {
 	const navigate = useNavigate();
 	const theme = useTheme();
+
 	const [open, setOpen] = React.useState(false);
 
 	const handleDrawerOpen = () => {
@@ -32,6 +33,8 @@ export default function Layout(props) {
 
 	const onOptionClick = (path) => navigate(path);
 
+	const appBarHeight = theme.mixins.toolbar.minHeight;
+	console.log("appBarHeight: ", appBarHeight);
 	return (
 		<Box sx={{ display: "flex" }}>
 			<CssBaseline />
@@ -70,8 +73,7 @@ export default function Layout(props) {
 					))}
 				</List>
 			</Drawer>
-			<Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-				<Toolbar />
+			<Box component="main" sx={{ flexGrow: 1, p: 3 }} style={{ marginTop: appBarHeight }}>
 				{props.children}
 			</Box>
 		</Box>
