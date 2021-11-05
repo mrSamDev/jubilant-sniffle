@@ -10,7 +10,7 @@ generate_data:
 	output="${OUTDIR_PATH}" node node/index.js 
 
 node_modules: package.json
-	npm install
+	yarn install
 
 dev: 
 	yarn start
