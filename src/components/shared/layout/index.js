@@ -34,7 +34,7 @@ export default function Layout(props) {
 	const onOptionClick = (path) => navigate(path);
 
 	const appBarHeight = theme.mixins.toolbar.minHeight;
-	console.log("appBarHeight: ", appBarHeight);
+
 	return (
 		<Box sx={{ display: "flex" }}>
 			<CssBaseline />
