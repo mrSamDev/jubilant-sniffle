@@ -9,11 +9,14 @@ import MaUTable from "@mui/material/Table";
 import MaUTableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
 import { Fragment } from "react";
+import Colors from "../../../constants/colors";
+import TableSortLabel from "@mui/material/TableSortLabel";
+import { visuallyHidden } from "@mui/utils";
 
 export const Cell = styled(TableCell)(({ theme }) => ({
 	[`&.${tableCellClasses.head}`]: {
-		backgroundColor: theme.palette.common.black,
-		color: theme.palette.common.white,
+		backgroundColor: theme.palette.common.white,
+		color: theme.palette.common.black,
 	},
 	[`&.${tableCellClasses.body}`]: {
 		fontSize: 14,
@@ -78,3 +81,15 @@ Pagination.defaultProps = {
 	onRowsPerPageChange: () => {},
 	rowsPerPageOptions: [10, 25, 100],
 };
+
+export function HeaderLabel(props) {
+	const { sortEnabled } = props;
+	if (!sortEnabled) return props.children;
+	const { onClick, isSorted, isSortedDesc } = props;
+
+	return (
+		<TableSortLabel active={isSorted} direction={isSortedDesc ? "desc" : "asc"} onClick={onClick}>
+			{props.children}
+		</TableSortLabel>
+	);
+}

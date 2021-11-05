@@ -1,15 +1,15 @@
 import React, { Fragment } from "react";
 
-import { Cell, Row, Head, Table, Container, Body, Pagination } from "../shared/table";
+import { Cell, Row, Head, Table, Container, Body, Pagination, HeaderLabel } from "../shared/table";
 
-import { useTable, usePagination } from "react-table";
+import { useTable, usePagination, useSortBy } from "react-table";
 
 import makeData from "./makeData";
 
 import { getPaginationProps } from "./utils";
 
 function TableVisualization({ columns, data }) {
-	const table = useTable({ columns, data }, usePagination);
+	const table = useTable({ columns, data }, useSortBy, usePagination);
 	const { getTableProps, headerGroups, page, prepareRow } = table;
 	return (
 		<Fragment>
@@ -18,9 +18,17 @@ function TableVisualization({ columns, data }) {
 					<Head>
 						{headerGroups.map((headerGroup) => (
 							<Row {...headerGroup.getHeaderGroupProps()}>
-								{headerGroup.headers.map((column) => (
-									<Cell {...column.getHeaderProps()}>{column.render("Header")}</Cell>
-								))}
+								{headerGroup.headers.map((column) => {
+									const { onClick, ...cellProps } = column.getHeaderProps(column.getSortByToggleProps());
+									const labelProps = { onClick, ...column };
+									return (
+										<Cell {...cellProps}>
+											<HeaderLabel sortEnabled {...labelProps}>
+												{column.render("Header")}
+											</HeaderLabel>
+										</Cell>
+									);
+								})}
 							</Row>
 						))}
 					</Head>
