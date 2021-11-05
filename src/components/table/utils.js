@@ -1,4 +1,4 @@
-export function getPaginationProps(table) {
+export function preparePagination(table) {
 	const {
 		pageCount: count,
 		gotoPage,
@@ -17,5 +17,14 @@ export function getPaginationProps(table) {
 			setPageSize(+event.target.value);
 			gotoPage(0);
 		},
+	};
+}
+
+export function prepareCell(column) {
+	const { onClick, ...cell } = column;
+	const label = { onClick, ...column };
+	return {
+		cell,
+		label,
 	};
 }

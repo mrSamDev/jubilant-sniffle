@@ -6,7 +6,7 @@ import { useTable, usePagination, useSortBy } from "react-table";
 
 import makeData from "./makeData";
 
-import { getPaginationProps } from "./utils";
+import { preparePagination, prepareCell } from "./utils";
 
 function TableVisualization({ columns, data }) {
 	const table = useTable({ columns, data }, useSortBy, usePagination);
@@ -19,11 +19,10 @@ function TableVisualization({ columns, data }) {
 						{headerGroups.map((headerGroup) => (
 							<Row {...headerGroup.getHeaderGroupProps()}>
 								{headerGroup.headers.map((column) => {
-									const { onClick, ...cellProps } = column.getHeaderProps(column.getSortByToggleProps());
-									const labelProps = { onClick, ...column };
+									const { label, cell } = prepareCell(column.getHeaderProps(column.getSortByToggleProps()));
 									return (
-										<Cell {...cellProps}>
-											<HeaderLabel sortEnabled {...labelProps}>
+										<Cell {...cell}>
+											<HeaderLabel sortEnabled {...label}>
 												{column.render("Header")}
 											</HeaderLabel>
 										</Cell>
@@ -46,7 +45,7 @@ function TableVisualization({ columns, data }) {
 					</Body>
 				</Table>
 			</Container>
-			<Pagination {...getPaginationProps(table)} />
+			<Pagination {...preparePagination(table)} />
 		</Fragment>
 	);
 }
@@ -55,40 +54,23 @@ function App() {
 	const columns = React.useMemo(
 		() => [
 			{
-				Header: "Name",
-				columns: [
-					{
-						Header: "First Name",
-						accessor: "firstName",
-					},
-					{
-						Header: "Last Name",
-						accessor: "lastName",
-					},
-				],
+				Header: "Age",
+				accessor: "age",
 			},
 			{
-				Header: "Info",
-				columns: [
-					{
-						Header: "Age",
-						accessor: "age",
-					},
-					{
-						Header: "Visits",
-						accessor: "visits",
-					},
-					{
-						Header: "Status",
-						accessor: "status",
-					},
-					{
-						Header: "Profile Progress",
-						accessor: "progress",
-					},
-				],
+				Header: "Visits",
+				accessor: "visits",
+			},
+			{
+				Header: "Status",
+				accessor: "status",
+			},
+			{
+				Header: "Profile Progress",
+				accessor: "progress",
 			},
 		],
+
 		[]
 	);
 
