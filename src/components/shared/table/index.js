@@ -8,10 +8,13 @@ import PropTypes from "prop-types";
 import MaUTable from "@mui/material/Table";
 import MaUTableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
-import { Fragment } from "react";
-import Colors from "../../../constants/colors";
+import { Fragment, useState } from "react";
 import TableSortLabel from "@mui/material/TableSortLabel";
-import { visuallyHidden } from "@mui/utils";
+import Button from "@mui/material/Button";
+import Popover from "@mui/material/Popover";
+import Box from "@mui/material/Box";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 export const Cell = styled(TableCell)(({ theme }) => ({
 	[`&.${tableCellClasses.head}`]: {
@@ -91,5 +94,35 @@ export function HeaderLabel(props) {
 		<TableSortLabel active={isSorted} direction={isSortedDesc ? "desc" : "asc"} onClick={onClick}>
 			{props.children}
 		</TableSortLabel>
+	);
+}
+
+export function ColumnHiding(props) {
+	const [anchorEl, setAnchorEl] = useState(null);
+	const handleClick = (event) => setAnchorEl(event.currentTarget);
+	const handleClose = () => setAnchorEl(null);
+
+	const open = Boolean(anchorEl);
+	const id = open ? "simple-popover" : undefined;
+	const { allColumns, onChange, indeterminate, checked } = props;
+
+	return (
+		<Fragment>
+			<Button aria-describedby={id} onClick={handleClick}>
+				Column Hiding
+			</Button>
+
+			<Popover id={id} open={open} anchorEl={anchorEl} onClose={handleClose} anchorOrigin={{ vertical: "bottom", horizontal: "left" }}>
+				<Box style={{ padding: "5px 10px" }}>
+					<FormControlLabel label="Toggle" control={<Checkbox checked={checked} indeterminate={Boolean(indeterminate)} onChange={onChange} />} />
+					<Box sx={{ display: "flex", flexDirection: "column", ml: 3 }}>
+						{allColumns.map((column) => {
+							const { checked, onChange } = column.getToggleHiddenProps();
+							return <FormControlLabel label={column.Header} control={<Checkbox checked={checked} onChange={onChange} />} />;
+						})}
+					</Box>
+				</Box>
+			</Popover>
+		</Fragment>
 	);
 }

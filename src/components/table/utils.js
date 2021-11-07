@@ -28,3 +28,12 @@ export function prepareCell(column) {
 		label,
 	};
 }
+
+export function prepareColumnHiding(table) {
+	const { getToggleHideAllColumnsProps, allColumns } = table;
+
+	return {
+		allColumns,
+		...getToggleHideAllColumnsProps(),
+	};
+}

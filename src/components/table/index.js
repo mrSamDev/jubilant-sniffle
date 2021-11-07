@@ -1,12 +1,12 @@
 import React, { Fragment } from "react";
 
-import { Cell, Row, Head, Table, Container, Body, Pagination, HeaderLabel } from "../shared/table";
+import { Cell, Row, Head, Table, Container, Body, Pagination, HeaderLabel, ColumnHiding } from "../shared/table";
 
 import { useTable, usePagination, useSortBy } from "react-table";
 
 import makeData from "./makeData";
 
-import { preparePagination, prepareCell } from "./utils";
+import { preparePagination, prepareCell, prepareColumnHiding } from "./utils";
 
 function TableVisualization({ columns, data }) {
 	const table = useTable({ columns, data }, useSortBy, usePagination);
@@ -14,6 +14,7 @@ function TableVisualization({ columns, data }) {
 	return (
 		<Fragment>
 			<Container sticky>
+				<ColumnHiding {...prepareColumnHiding(table)} />
 				<Table stickyHeader {...getTableProps()}>
 					<Head>
 						{headerGroups.map((headerGroup) => (
